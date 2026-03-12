@@ -28,6 +28,14 @@ export function GilPage(): JSX.Element {
         <StatStrip result={result} />
       </SectionCard>
 
+      <SectionCard title="Technical Background" subtitle="How CPython behavior maps to this model.">
+        <ul className="list-flow">
+          {(lesson?.technicalBackground ?? []).map((item) => (
+            <li key={item}>{item}</li>
+          ))}
+        </ul>
+      </SectionCard>
+
       <SectionCard title="Model Limits" subtitle="This page is an educational approximation, not a bytecode tracer.">
         <ul className="list-flow">
           <li>Timeline ticks are conceptual units, not wall-clock milliseconds.</li>
@@ -41,6 +49,19 @@ export function GilPage(): JSX.Element {
           <li>Myth: GIL means threads are useless. Reality: I/O-bound concurrency can still benefit.</li>
           <li>Myth: One thread always keeps the GIL. Reality: ownership rotates as scheduling progresses.</li>
           <li>Myth: GIL eliminates switching overhead. Reality: context switches still happen and affect throughput.</li>
+        </ul>
+      </SectionCard>
+
+      <SectionCard title="References" subtitle="Primary sources for deeper runtime details.">
+        <ul className="list-flow">
+          {(lesson?.references ?? []).map((reference) => (
+            <li key={reference.url}>
+              <a href={reference.url} target="_blank" rel="noreferrer" className="inline-link">
+                {reference.label}
+              </a>{' '}
+              - {reference.note}
+            </li>
+          ))}
         </ul>
       </SectionCard>
     </div>

@@ -30,6 +30,14 @@ export function validateScenarioPack(pack: ScenarioPack): void {
         throw new Error(`Lesson ${lesson.id} references unknown scenario ${scenarioId}`);
       }
     }
+
+    if (lesson.references) {
+      for (const reference of lesson.references) {
+        if (!isNonEmptyString(reference.label) || !isNonEmptyString(reference.url)) {
+          throw new Error(`Lesson ${lesson.id} has an invalid reference entry`);
+        }
+      }
+    }
   }
 }
 

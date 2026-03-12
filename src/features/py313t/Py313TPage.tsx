@@ -28,6 +28,14 @@ export function Py313TPage(): JSX.Element {
         <StatStrip result={result} />
       </SectionCard>
 
+      <SectionCard title="Technical Background" subtitle="Runtime details behind the free-threaded model.">
+        <ul className="list-flow">
+          {(lesson?.technicalBackground ?? []).map((item) => (
+            <li key={item}>{item}</li>
+          ))}
+        </ul>
+      </SectionCard>
+
       <SectionCard title="Model Limits" subtitle="This visualization explains the model, not exact production profiling data.">
         <ul className="list-flow">
           <li>Parallel slots represent conceptual concurrency, not core-pinned execution traces.</li>
@@ -41,6 +49,19 @@ export function Py313TPage(): JSX.Element {
           <li>Myth: 3.13t always makes threaded code faster. Reality: overhead and contention still matter.</li>
           <li>Myth: Data races disappear. Reality: shared mutable state still needs synchronization.</li>
           <li>Myth: Scheduling complexity vanishes. Reality: concurrency debugging remains essential.</li>
+        </ul>
+      </SectionCard>
+
+      <SectionCard title="References" subtitle="Primary sources for free-threading behavior and constraints.">
+        <ul className="list-flow">
+          {(lesson?.references ?? []).map((reference) => (
+            <li key={reference.url}>
+              <a href={reference.url} target="_blank" rel="noreferrer" className="inline-link">
+                {reference.label}
+              </a>{' '}
+              - {reference.note}
+            </li>
+          ))}
         </ul>
       </SectionCard>
     </div>

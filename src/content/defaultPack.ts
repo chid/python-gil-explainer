@@ -10,6 +10,34 @@ const pack: ScenarioPack = {
       id: 'gil-basics',
       title: 'How the GIL Coordinates Threads',
       description: 'One thread executes Python bytecode at a time in a process-wide lock model.',
+      technicalBackground: [
+        'The CPython Global Interpreter Lock (GIL) is a process-wide mutex that protects interpreter internals and many reference-counting operations.',
+        'In CPU-bound threaded code, threads contend for bytecode execution because only one thread can run Python bytecode at a given moment.',
+        'I/O-bound programs can still benefit from threads because blocking operations often release the GIL while waiting on external events.',
+        'C extensions may release the GIL around long native work, so real behavior can differ from a pure-Python CPU-bound loop.'
+      ],
+      references: [
+        {
+          label: 'Python threading docs',
+          url: 'https://docs.python.org/3/library/threading.html',
+          note: 'Official threading behavior and GIL notes.'
+        },
+        {
+          label: 'CPython C-API thread state and GIL',
+          url: 'https://docs.python.org/3/c-api/init.html#thread-state-and-the-global-interpreter-lock',
+          note: 'How C code attaches thread state and interacts with the GIL.'
+        },
+        {
+          label: 'CPython FAQ: What is the GIL?',
+          url: 'https://docs.python.org/3/faq/library.html#what-is-the-global-interpreter-lock-gil',
+          note: 'Background, tradeoffs, and common questions.'
+        },
+        {
+          label: 'PEP 703',
+          url: 'https://peps.python.org/pep-0703/',
+          note: 'Rationale and design for optional no-GIL/free-threading.'
+        }
+      ],
       scenarios: [
         'cpu-four-threads',
         'mixed-six-threads',
@@ -21,6 +49,34 @@ const pack: ScenarioPack = {
       id: 'py313t-basics',
       title: 'How Python 3.13t Changes the Model',
       description: 'Free-threading allows multiple threads to execute Python code in parallel.',
+      technicalBackground: [
+        'Python 3.13 introduces an experimental free-threaded build variant that can run without the process-wide GIL.',
+        'Without a global lock, multiple threads can execute Python code concurrently, but synchronization and atomicity concerns become more explicit.',
+        'Free-threaded execution can improve parallel CPU throughput for some workloads, but it can also add overhead depending on object sharing patterns.',
+        'Performance outcomes depend on contention, workload mix, and extension ecosystem readiness.'
+      ],
+      references: [
+        {
+          label: 'Python free-threading HOWTO',
+          url: 'https://docs.python.org/3/howto/free-threading-python.html',
+          note: 'Official usage guidance for free-threaded Python builds.'
+        },
+        {
+          label: "What's New in Python 3.13",
+          url: 'https://docs.python.org/3.13/whatsnew/3.13.html',
+          note: 'Release context and changes in 3.13.'
+        },
+        {
+          label: 'PEP 703',
+          url: 'https://peps.python.org/pep-0703/',
+          note: 'Technical motivation, constraints, and rollout details.'
+        },
+        {
+          label: 'C-API extension support for free threading',
+          url: 'https://docs.python.org/3/howto/free-threading-extensions.html',
+          note: 'Extension compatibility and migration implications.'
+        }
+      ],
       scenarios: [
         'cpu-four-threads',
         'io-eight-threads',

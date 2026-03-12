@@ -23,6 +23,8 @@ export interface Lesson {
   title: string;
   description: string;
   scenarios: string[];
+  technicalBackground?: string[];
+  references?: ReferenceLink[];
 }
 
 export interface QuizItem {
@@ -40,4 +42,10 @@ export interface ScenarioPack {
   lessons: Lesson[];
   scenarios: Scenario[];
   quizzes: Record<string, QuizItem[]>;
+}
+
+export interface ReferenceLink {
+  label: string;
+  url: string;
+  note: string;
 }
