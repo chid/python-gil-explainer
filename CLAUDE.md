@@ -56,3 +56,12 @@ Single `src/styles/global.css` with CSS custom properties for the color palette 
 Tests live in `tests/` and use Vitest + jsdom + Testing Library. The four test files cover: engine logic (`simulation.test.ts`), pack validation (`scenarioPack.test.ts`), page rendering (`lessonPages.test.tsx`), and component interactions (`controls.test.tsx`).
 
 TypeScript strict mode is on with `noUnusedLocals` and `noUnusedParameters` enforced by the compiler.
+
+## Deployment
+
+The app deploys to GitHub Pages via `.github/workflows/deploy.yml` on every push to `main`. Two conventions support this:
+
+- **`HashRouter`** is used instead of `BrowserRouter` because GitHub Pages has no server-side fallback to `index.html` for unknown paths.
+- **`vite.config.ts`** sets `base: '/python-gil-explainer/'` when `GITHUB_ACTIONS=true` so asset URLs are correct under the repo subpath. Locally the base stays `/`.
+
+To activate Pages, go to **Settings → Pages → Source** and select "GitHub Actions".
